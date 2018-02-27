@@ -38,7 +38,7 @@ require_once 'config.php';
       <fieldset>
 
         <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
-        <a href="https://hashflare.io/r/69295B0A-ads"><img src="https://hashflare.io/banners/468x60-eng-2.jpg" alt="HashFlare"></a>
+        <!--<a href="https://hashflare.io/r/69295B0A-ads"><img src="https://hashflare.io/banners/468x60-eng-2.jpg" alt="HashFlare"></a>-->
         <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
 
         <br>
@@ -46,47 +46,47 @@ require_once 'config.php';
 
           <?php                  
 
-        $bitcoin = new jsonRPCClient('http://127.0.0.1:8070/json_rpc');
+        $intense = new jsonRPCClient('http://127.0.0.1:8070/json_rpc');
 
-        $balance = $bitcoin->getbalance();
-        $balanceDisponible = $balance['available_balance'];
+        $balance = $intense->getbalance();
+        $balanceAvailable = $balance['available_balance'];
         $lockedBalance = $balance['locked_amount'];
-        $dividirEntre = 100000000;
-        $totalBCN =  ($balanceDisponible+$lockedBalance)/$dividirEntre;
+        $divideBetween = 100000000;
+        $totalITNS =  ($balanceAvailable+$lockedBalance)/$divideBetween;
         
 
         $recaptcha = new Recaptcha($keys);
         //Available Balance
-        $balanceDisponibleFaucet = number_format(round($balanceDisponible/$dividirEntre,8),8,'.', '');
+        $balanceAvailableFaucet = number_format(round($balanceAvailable/$divideBetween,8),8,'.', '');
         ?>
 
         <form action="request.php" method="POST">
 
           <?php if(isset($_GET['msg'])){
-            $mensaje = $_GET['msg']; 
+            $message = $_GET['msg']; 
 
-            if($mensaje == "captcha"){?>
+            if($message == "captcha"){?>
             <div  id="alert" class="alert alert-error radius">
               Incorrect Captcha, please answer correctly.
             </div>
-            <?php }else if($mensaje == "wallet"){ ?>
+            <?php }else if($message == "wallet"){ ?>
 
             <div id="alert" class="alert alert-error radius">
-              Please enter a valid Bytecoin Wallet.
+              Please enter a valid IntenseCoin Wallet.
             </div>
-            <?php }else if($mensaje == "success"){ ?>
+            <?php }else if($message == "success"){ ?>
 
             <div class="alert alert-success radius">
-              You have been awarded with <?php echo $_GET['amount']; ?> BCN.<br/><br/>
-              You will receive <?php echo $_GET['amount']-0.01; ?> BCN (Fee 0.01)<br/>
+              You have been awarded with <?php echo $_GET['amount']; ?> ITNS.<br/><br/>
+              You will receive <?php echo $_GET['amount']-0.01; ?> ITNS (Fee 0.01)<br/>
               <a target="_blank" href="http://chainradar.com/bcn/transaction/<?php echo $_GET['txid']; ?>">See it on the blockchain.</a>
             </div>
-            <?php }else if($mensaje == "paymentID"){ ?>
+            <?php }else if($message == "paymentID"){ ?>
 
             <div id="alert" class="alert alert-error radius">
               Please check again your payment ID. <br>It should have 64 characters with no special chars.
             </div>
-            <?php }else if($mensaje == "notYet"){ ?>
+            <?php }else if($message == "notYet"){ ?>
 
             <div id="alert" class="alert alert-warning radius">
               You requested a reward less than 12 hours ago.
@@ -95,7 +95,7 @@ require_once 'config.php';
 
             <?php } ?>
             <div class="alert alert-info radius">
-              Available Balance: <?php echo $balanceDisponibleFaucet ?> BCN<br>
+              Available Balance: <?php echo $balanceAvailableFaucet ?> ITNS<br>
               <?php
 
               $link = mysqli_connect($hostDB, $userDB, $passwordDB, $database);
@@ -115,32 +115,32 @@ require_once 'config.php';
               mysqli_close($link);
               ?>
 
-              Already paid: <?php echo $dato[0]/$dividirEntre; ?> BCN with <?php echo $dato2[0];?> total payouts.
+              Already paid: <?php echo $dato[0]/$divideBetween; ?> ITNS with <?php echo $dato2[0];?> total payouts.
             </div>
 
-            <?php if($balanceDisponibleFaucet<6.1){ ?>
+            <?php if($balanceAvailableFaucet<6.1){ ?>
             <div class="alert alert-warning radius">
              Faucet is empty or balance is lower than reward. <br> Wait for a reload or donation.
            </div>
 
            <?php }else{?>
 
-           <input type="text" name="wallet" required placeholder="Bytecoin Wallet">
+           <input type="text" name="wallet" required placeholder="IntenseCoin Wallet">
 
            <input type="text" name="paymentid" placeholder="Payment ID (Optional)" >
            <br/>
            <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
-           <iframe data-aa='74112' src='https://ad.a-ads.com/74112?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0;overflow:hidden' allowtransparency='true' frameborder='0'></iframe>
+           <!--<iframe data-aa='74112' src='https://ad.a-ads.com/74112?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0;overflow:hidden' allowtransparency='true' frameborder='0'></iframe>-->
            <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
            <br/>
            <?php 
            echo $recaptcha->render();     
            ?>
 
-           <center><input type="submit" value="Give me my BCN!"></center>
+           <center><input type="submit" value="Give me my ITNS!"></center>
            <br>
            <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
-           <iframe scrolling="no" frameborder="0" style="overflow:hidden;width:468px;height:60px;" src="//bee-ads.com/ad.php?id=6534"></iframe>
+           <!--<iframe scrolling="no" frameborder="0" style="overflow:hidden;width:468px;height:60px;" src="//bee-ads.com/ad.php?id=6534"></iframe>-->
            <!-- ADS ADS ADS ADS ADS ADS ADS ADS ADS -->
            <?php } ?>
            <br>
@@ -174,19 +174,19 @@ require_once 'config.php';
               </thead>
               <tbody>
                 <?php 
-                $deposits = ($bitcoin->get_transfers());
+                $deposits = ($intense->get_transfers());
 
                 $transfers = array_reverse(($deposits["transfers"]),true);
-                $contador = 0;
+                $counter = 0;
                 foreach($transfers as $deposit){
                   if($deposit["output"] == ""){
-                    if($contador < 6){
+                    if($counter < 6){
                       $time = $deposit["time"];
                       echo "<tr>";
                       echo "<th>".gmdate("Y-m-d H:i:s", $time)."</th>";
-                      echo "<th>".round($deposit["amount"]/$dividirEntre,8)."</th>";
+                      echo "<th>".round($deposit["amount"]/$divideBetween,8)."</th>";
                       echo "</tr>";
-                      $contador++;
+                      $counter++;
                     }
                   }
 
