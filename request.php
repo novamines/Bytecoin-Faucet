@@ -29,7 +29,7 @@
 
 
 
-			if(empty($wallet) OR (strlen($wallet) < 95)){
+			if(empty($wallet) OR (strlen($wallet) < 97)){
 				header("Location: ./?msg=wallet");
 				exit();
 			}
